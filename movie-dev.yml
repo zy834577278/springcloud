@@ -1,0 +1,15 @@
+server:
+  port: 10002
+spring:
+  application:
+    name: movie
+
+eureka:
+  client:
+    register-with-eureka: true # 作为客户端需要注册到Eureka
+    fetch-registry: true  # 作为客户端需要从Eureka获取注册信息
+    service-url:  # 客户端注册地址
+      defaultZone: http://127.0.0.1:8888/eureka
+feign:
+  hystrix:
+    enabled: true
