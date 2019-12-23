@@ -1,35 +1,43 @@
 server:
-  port: 10001
-spring:   # 服务名称，暂时没有用，讲到SpringCloud服务调用的时候才会有用。
+  port: 9001
+
+spring:
   application:
     name: user
   datasource:
-    url: jdbc:mysql://localhost:3306/springcloud?characterEncoding=UTF8
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
     username: root
     password: root
-  jpa:
-    show-sql: true # 是否打印sql语句
-    generate-ddl: true # 是否自动建表
-    database: mysql # 连接的数据库
-  zipkin:
-    base-url: http://127.0.0.1:9041
-    sender:
-      type: web
-  sleuth:
-    sampler:
-      probability: 1
+#  devtools:
+#    restart:
+#      enabled: true  #设置开启热部署
+#  freemarker:
+#    cache: false    #页面不加载缓存，修改即时生效
+#  redis:
+#    port: 6379
+#    host: localhost
+#    jedis:
+#      pool:
+#        max-active: 10
+#        min-idle: 0
+  main:
+    allow-bean-definition-overriding: true
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  # 全局主键策略
+  global-config:
+    db-config:
+      id-type: auto
+      logic-not-delete-value: 0
+      logic-delete-value: 1
+
 eureka:
   client:
     register-with-eureka: true # 作为客户端需要注册到Eureka
     fetch-registry: true  # 作为客户端需要从Eureka获取注册信息
     service-url:  # 客户端注册地址
-      defaultZone: http://127.0.0.1:8888/eureka
-#  instance:
-#     # 优先使用该服务的IP地址注册到Eureka，在生产环境建议改为true
-#    prefer-ip-address: true
-#     # 修改续约间隔时间
-#    lease-renewal-interval-in-seconds: 5
-#    # 修改服务失效时间
-#    lease-expiration-duration-in-seconds: 10
-##
+      defaultZone: http://127.0.0.1:9003/eureka # 注册到哪里, 也就是Eureka Server的地址
+  instance:
+    prefer-ip-address: true # 将ip地址注册到Eureka Server
